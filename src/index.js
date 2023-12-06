@@ -2,7 +2,7 @@ const express  = require ("express");
 
 const getConnectionDB = require('./database/connection');
 const rotaCliente = require('./rotas/cliente');
-// const rotaPedido = require('./rotas/pedido');
+const rotaPedido = require('./rotas/pedido');
 const log = require('./middleware/log');
 
 const app = express();
