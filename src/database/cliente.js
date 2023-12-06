@@ -37,6 +37,25 @@ module.exports = {
         catch(error){
             console.log('Erro ao selecionar aniversários dos clientes: '+error)
         }
+    },
+    deletarCliente:async()=>{
+    try {
+        const result = await connection(cpf).query(`exec pra.excluirCliente '${cpf}'`)
+        return true
+        }
+        catch(err) {
+            cconsole.log('Erro ao deletar cliente:'+err)
+            return false
+        }
+    },
+    alterarSenha:async(cpfCliente,senha)=>{
+        try{
+            let respos = await connection().query(`UPDATE pra.Cliente SET senha = ${senha} where = ${cpfCliente}`)
+            return true
+        }
+        catch(erro){
+            console.log("Error na atualização da Senha: "+erro.code)
+            return false
+        }
     }
-    
 }

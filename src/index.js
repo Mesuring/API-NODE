@@ -12,7 +12,7 @@ getConnectionDB();
 app.use(log)
 
 app.use('/cliente',rotaCliente);
-//app.use('/pedido',rotaPedido);
+app.use('/pedido',rotaPedido);
 
 const port = 3000;
 
