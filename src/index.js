@@ -26,5 +26,5 @@ app.use('/*', (req, res) => {
 })
 
 app.listen(port, ()=>{
-    console.log(`Servidor rodando no endpoint https//localhost:${port}/`)
+    console.log(`Servidor rodando no endpoint http://localhost:${port}/`)
 })
