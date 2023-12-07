@@ -21,7 +21,7 @@ module.exports = {
     },
     cadastrar:async(cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha)=>{
         try{
-            let respos = await connection().query(`exec pra.incluirCliente ${cpfCliente},${firNome},${meioNome},${ultNome},${Email},${cep},${numCasa},${aniversario},${senha}`)
+            let respos = await connection().query(`insert into pra.Cliente values ('${cpfCliente}','${firNome}','${meioNome}','${ultNome}','${Email}','${cep}',${numCasa},'${aniversario}','${senha}')`)
             return true
         }
         catch(erro){
