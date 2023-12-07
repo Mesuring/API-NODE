@@ -14,7 +14,7 @@ app.use(log)
 app.use('/cliente',rotaCliente);
 app.use('/pedido',rotaPedido);
 
-const port = 3000;
+const port = 3001;
 
 
 //Comunica que essa vai ser uma rota usavel

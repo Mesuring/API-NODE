@@ -39,7 +39,7 @@ clienteRota.post('/cadastro',async(req,res)=>{
     if(cpfCliente.length !=11)
         return res.status(400).json({ erro: 'O CPF deve ter OBRIGATÓRIAMENTE 11 números' })
     if(firNome.length > 15)
-     return res.status(400).json({erro:'Nome maior que o permitido'})
+        return res.status(400).json({erro:'Nome maior que o permitido'})
     if(meioNome !=1)
         return res.status(400).json({erro:'Nome só pode ser cadastrado como abreviação'})
     if(ultNome.length >15)
