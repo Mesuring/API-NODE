@@ -3,6 +3,8 @@ const express  = require ("express");
 const rotaCliente = require('./rotas/cliente');
 const rotaPedido = require('./rotas/pedido');
 
+
+
 const app = express();
 
 app.use(express.json()); 

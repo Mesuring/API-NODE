@@ -26,15 +26,10 @@ pedidoRota.post('/incluir',async(req, res) => {
     const {cpfCliente,idProd,qtdComprada,data,cep,numCasa,idFunc} = req.body
     if(!cpfCliente&&!idProd&&!qtdComprada&&!data&&!cep&&!numCasa && !idFunc)
         return res.status(400).json({ erro: 'Insira todos os dados'})
-    if(cpfCliente.length !=11)
-        return res.status(400).json({ erro: 'O CPF deve ter OBRIGATÓRIAMENTE 11 números' })
-    if(cep.length !=8)
-        return res.status(400).json({erro:'CEP deve OBRIGATÓRIAMENTE ter 8 números'})
-    if(idFunc.length!=3)
-    return res.status(400).json({ erro: 'ID de funcionário inválido'})
-
-
-    if(!await pedidoBD.cadastrar( cpfCliente,idProd,qtdComprada,data,cep,numCasa,idFunc))
+    let comando = false
+    comando = await pedidoBD.cadastrar( cpfCliente,idProd,qtdComprada,data,cep,numCasa,idFunc) 
+    console.log(comando)
+    if(!comando)
         return res.status(501).json({ error: "erro ao cadastrar PEDIDO" })
     res.sendStatus(201)
 })

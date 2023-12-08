@@ -1,6 +1,8 @@
 const express = require('express');
 const clienteDB = require('../database/cliente');
 const clienteRota = express.Router();
+const jwt = require("jsonwebtoken");
+const secreto = 'mesuring'
 
 
 clienteRota.get('/procurar',async(req,res)=>{
@@ -15,9 +17,8 @@ clienteRota.get('/procurar/:cpf', async(req,res)=>{
     res.status(200).json(dadosCliente)
 }),
 
-clienteRota.put('/alter',async(req,res)=>{
-    const { cpf } = req.params
-    const { senha } = req.body
+clienteRota.post('/alter:cpf',async(req,res)=>{
+    const { cpf,senha} = req.params
     if(!cpf && !senha)
         return res.status(400).json({ erro: 'Insira todos os dados'})
     if(cpf.length !=11)
@@ -37,23 +38,10 @@ clienteRota.post('/cadastro',async(req,res)=>{
 
     if(!cpfCliente&&!firNome&&!meioNome&&!ultNome&&!Email&&!cep&&!numCasa&&!aniversario && !senha)
         return res.status(400).json({ erro: 'Insira todos os dados'})
-    if(cpfCliente.length !=11)
-        return res.status(400).json({ erro: 'O CPF deve ter OBRIGATÓRIAMENTE 11 números' })
-    if(firNome.length > 15)
-        return res.status(400).json({erro:'Nome maior que o permitido'})
-    // if(meioNome >1)
-    //     return res.status(400).json({erro:'Nome só pode ser cadastrado como abreviação'})
-    if(ultNome.length >15)
-        return res.status(400).json({erro:'Último nome maior que o permitido'})
-    if(Email.length >30)
-        return res.status(400).json({erro:'Email maior que o permitido'})
-    if(cep.length !=8)
-        return res.status(400).json({erro:'CEP deve OBRIGATÓRIAMENTE ter 8 números'})
-    if(senha.length>20)
-        return res.status(400).json({erro:'Senha maior que o permitido'})
-
-    if(!await clienteDB.cadastrar( cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha))
-        return res.status(501).json({ error: "erro ao cadastrar cliente" })
+    let inserir =await clienteDB.cadastrar( cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha)
+    console.log(inserir)
+    if(!inserir)
+        return res.status(501).json({ error: "Erro ao cadastrar cliente" })
     res.sendStatus(201)
 
 }),
@@ -62,19 +50,34 @@ clienteRota.get('/aniversario',async(req,res)=>{
     res.status(200).json(await clienteDB.aniversarioClienteHoje())
 }),
 
-clienteRota.delete('/deletar:cpf',async(req,res)=>{
-    let { cpf } = req.params
-    if(cpf.length != 11)
-        return res.status(400).json({ erro: 'O CPF deve ter OBRIGATÓRIAMENTE 11 números' })
+clienteRota.delete('/deletar/:cpf',async(req,res)=>{
+    let { cpf  } = req.params
 
-    if(!await clienteDB.selecionarPorId(cpf))
-        return res.status(404).json({ error: "cliente não encontrado" })
 
     if(!await clienteDB.deletarCliente(cpf))
         return res.status(401).json({ error: "erro ao deletar cliente" })
     return res.status(200).json({ message: "cliente deletado com sucesso" })
+
 }),
 
+clienteRota.post('/login',async(req,res)=>{
+    const {email,senha} = req.params
+    let logou = await clienteDB.fazLogin(email,senha)
+    if(!logou){
+        res.status(401).json({erro:'Dados para Login errados'})
+    }
+    const token = jwt.sign({e_mail:email,password:senha},secreto,{expiresIn: 300,subject:'1'});
+    let verificou= false
+    verificou = await clienteDB.verificaLogin(token,secreto)
+    console.log(token)
+    console.log(verificou)
+    if(!verificou){
+        console.log("verificou FALSE")
+        res.status(401).json({erro:'Sem permissão'})
+    }
+    console.log("VERIFICOU TRUE")
+    res.status(200).json({message:"Acesso Permitido"})
+}),
 
 
 module.exports =clienteRota
