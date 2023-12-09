@@ -16,7 +16,6 @@ clienteRota.get('/procurar/:cpf', async(req,res)=>{
         res.status(404).json({erro:'Cliente não encontrado'})
     res.status(200).json(dadosCliente)
 }),
-
 clienteRota.post('/alter:cpf',async(req,res)=>{
     const { cpf,senha} = req.params
     if(!cpf && !senha)
@@ -34,8 +33,8 @@ clienteRota.post('/alter:cpf',async(req,res)=>{
 }),
 
 clienteRota.post('/cadastro',async(req,res)=>{
-    const {cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha} = req.body
-
+    const {firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha} = req.body
+    const {cpfCliente} = req.body
     if(!cpfCliente&&!firNome&&!meioNome&&!ultNome&&!Email&&!cep&&!numCasa&&!aniversario && !senha)
         return res.status(400).json({ erro: 'Insira todos os dados'})
     let inserir =await clienteDB.cadastrar( cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha)

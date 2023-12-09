@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 
 app.use('/cliente',rotaCliente);
 app.use('/pedido',rotaPedido);
-
+app.post('/cadastro',)
 const port = 3001;
 
 
