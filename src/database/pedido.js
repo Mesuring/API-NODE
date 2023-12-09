@@ -21,11 +21,13 @@ module.exports = {
     },
     cadastrar:async(cpfCliente,idProd,qtdComprada,data,cep,numCasa,idFunc)=>{
         try{
-            let respos = await connection().query(`exec pra.fazerPedido ${cpfCliente},${idProd},${qtdComprada},${data},${cep},${numCasa},${idFunc}`)
+            console.log(cpfCliente,idProd,qtdComprada,data,cep,numCasa,idFunc)
+            const respos = await connection().query(`exec pra.fazerPedido '${cpfCliente}',${idProd},${qtdComprada},'${data}','${cep}',${numCasa},${idFunc}`)
+            console.log(respos)
             return true
         }
-        catch(erro){
-            console.log("Error na Efetivação da venda: "+erro.code)
+        catch(error){
+            console.log("Error na Efetivação da venda: "+error)
             return false
         }
     }

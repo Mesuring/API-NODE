@@ -37,20 +37,7 @@ clienteRota.post('/cadastro',async(req,res)=>{
 
     if(!cpfCliente&&!firNome&&!meioNome&&!ultNome&&!Email&&!cep&&!numCasa&&!aniversario && !senha)
         return res.status(400).json({ erro: 'Insira todos os dados'})
-    if(cpfCliente.length !=11)
-        return res.status(400).json({ erro: 'O CPF deve ter OBRIGATÓRIAMENTE 11 números' })
-    if(firNome.length > 15)
-        return res.status(400).json({erro:'Nome maior que o permitido'})
-    // if(meioNome >1)
-    //     return res.status(400).json({erro:'Nome só pode ser cadastrado como abreviação'})
-    if(ultNome.length >15)
-        return res.status(400).json({erro:'Último nome maior que o permitido'})
-    if(Email.length >30)
-        return res.status(400).json({erro:'Email maior que o permitido'})
-    if(cep.length !=8)
-        return res.status(400).json({erro:'CEP deve OBRIGATÓRIAMENTE ter 8 números'})
-    if(senha.length>20)
-        return res.status(400).json({erro:'Senha maior que o permitido'})
+
 
     if(!await clienteDB.cadastrar( cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha))
         return res.status(501).json({ error: "erro ao cadastrar cliente" })

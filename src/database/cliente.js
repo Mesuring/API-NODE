@@ -21,11 +21,12 @@ module.exports = {
     },
     cadastrar:async(cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha)=>{
         try{
-            let respos = await connection().query(`insert into pra.Cliente values ('${cpfCliente}','${firNome}','${meioNome}','${ultNome}','${Email}','${cep}',${numCasa},'${aniversario}','${senha}')`)
+            console.log(cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha)
+            const respos = await connection().query(`exec pra.incluirCliente '${cpfCliente}','${firNome}','${meioNome}','${ultNome}','${Email}','${cep}',${numCasa},'${aniversario}','${senha}'`)
             return true
         }
         catch(erro){
-            console.log("Error no cadastro do Cliente: "+erro.code)
+            console.log("Error no cadastro do Cliente: "+erro)
             return false
         }
     },
