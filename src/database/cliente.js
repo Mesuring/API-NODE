@@ -50,9 +50,9 @@ module.exports = {
             return false
         }
     },
-    alterarSenha:async(cpfCliente,senha)=>{
+    alterarSenha:async(cpf,senha)=>{
         try{
-            let respos = await connection().query(`UPDATE pra.Cliente SET senha = ${senha} where = ${cpfCliente}`)
+            const respos = await connection().query(`UPDATE pra.Cliente SET senha = '${senha}' where CPF_Cliente= '${cpf}'`)
             return true
         }
         catch(erro){

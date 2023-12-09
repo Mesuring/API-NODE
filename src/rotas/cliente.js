@@ -17,14 +17,10 @@ clienteRota.get('/procurar/:cpf', async(req,res)=>{
 }),
 
 clienteRota.put('/alter',async(req,res)=>{
-    const { cpf } = req.params
-    const { senha } = req.body
+    const { cpf,senha} = req.body
     if(!cpf && !senha)
         return res.status(400).json({ erro: 'Insira todos os dados'})
-    if(cpf.length !=11)
-        return res.status(400).json({ erro: 'O CPF deve ter OBRIGATÓRIAMENTE 11 números' })
-    if(senha.length>20)
-        return res.status(400).json({erro:'Senha maior que o permitido'})
+
     const cliente = await clienteDB.selecionarPorId(cpf)
     if(!cliente)
         return res.status(404).json({ error: "cliente não encontrado" })
