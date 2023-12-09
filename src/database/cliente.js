@@ -1,4 +1,5 @@
 const connection = require('./connection')
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     selectClientes:async()=>{
@@ -58,5 +59,24 @@ module.exports = {
             console.log("Error na atualização da Senha: "+erro.code)
             return false
         }
+    },
+    fazLogin:async(email,senha)=>{
+        try{
+            let resp = await connection().query(`Select * from pra.verificaLogin where senha ='${senha}' and Email = '${email}' `)
+            return true
+        }
+        catch(erro){
+            console.log("Erro ao Logar:  "+erro.code)
+            return false
+        }
+    },
+    verificaLogin: async(token,secret)=>{
+        let ret
+        jwt.verify(token,secret,(err)=>{
+            if(err) 
+                ret = false
+            ret= true
+        })
+        return ret
     }
 }
