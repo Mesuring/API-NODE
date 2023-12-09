@@ -72,7 +72,7 @@ clienteRota.post('/login',async(req,res)=>{
     if(!verificou){
         res.status(401).json({erro:'Sem permissão'})
     }
-    res.status(200).json({message:"Acesso Permitido"})
+    res.status(200).json({message:"Acesso Permitido",jsonToken: token})
 }),
 
 
