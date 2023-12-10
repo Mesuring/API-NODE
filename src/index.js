@@ -1,13 +1,15 @@
 const express  = require ("express");
-
+const cors= require('cors');
 const rotaCliente = require('./rotas/cliente');
 const rotaPedido = require('./rotas/pedido');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json()); 
+
 app.use((req, res, next) => {
-      console.time(`${req.method} - ${req.originalUrl}`)
+    console.time(`${req.method} - ${req.originalUrl}`)
     next()
     console.timeEnd(`${req.method} - ${req.originalUrl}`)
 })

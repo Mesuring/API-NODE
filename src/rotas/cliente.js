@@ -30,6 +30,7 @@ clienteRota.put('/alter',async(req,res)=>{
 }),
 
 clienteRota.post('/cadastro',async(req,res)=>{
+    console.log(req.body)
     const {cpfCliente,firNome,meioNome,ultNome,Email,cep,numCasa,aniversario,senha} = req.body
 
     if(!cpfCliente&&!firNome&&!meioNome&&!ultNome&&!Email&&!cep&&!numCasa&&!aniversario && !senha)
